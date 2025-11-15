@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/talent.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/talent", "dest": "/api/talent.js" }
+  ]
+}

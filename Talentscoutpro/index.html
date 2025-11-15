@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TalentScout Pro – AI Hiring Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      margin: 0;
+      padding: 0;
+      color: #1e1e1e;
+    }
+    header {
+      background: #0a3d91;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    textarea, input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 18px;
+      background: #0a3d91;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #084080;
+    }
+    .output {
+      margin-top: 30px;
+      padding: 20px;
+      background: #eef4ff;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      min-height: 120px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>TalentScout Pro – AI Hiring Assistant</header>
+
+<div class="container">
+
+  <label>Job Title</label>
+  <input id="jobTitle" type="text">
+
+  <label>Job Description</label>
+  <textarea id="jobDescription" rows="6" placeholder="Paste JD here"></textarea>
+
+  <label>Candidate Resume</label>
+  <textarea id="resumeText" rows="6" placeholder="Paste resume here"></textarea>
+
+  <button onclick="sendToAPI()">Generate Results</button>
+
+  <div class="output" id="outputBox">Your results will appear here…</div>
+
+</div>
+
+<script>
+async function sendToAPI() {
+  const jobTitle = document.getElementById('jobTitle').value;
+  const jobDescription = document.getElementById('jobDescription').value;
+  const resumeText = document.getElementById('resumeText').value;
+
+  document.getElementById('outputBox').textContent = "Processing...";
+
+  const response = await fetch("/api/talent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      jobTitle,
+      jobDescription,
+      resume: resumeText
+    })
+  });
+
+  const data = await response.json();
+  document.getElementById('outputBox').textContent = data.output;
+}
+</script>
+
+</body>
+</html>
